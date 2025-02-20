@@ -1,29 +1,86 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Toodiy</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toodiy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #333;
+            color: white;
+            padding: 15px;
+            font-size: 24px;
+        }
+        .links {
+            margin: 20px;
+        }
+        .links a {
+            text-decoration: none;
+            color: #007bff;
+            margin: 0 15px;
+            font-size: 18px;
+        }
+        .gallery {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .item {
+            background: white;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 200px;
+        }
+        .item a {
+            display: block;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Toodiy</h1>
-  </header>
 
-  <nav>
-    <ul>
-      <li><a href="https://www.youtube.com/@ivaansri1359" target="_blank">YouTube Channel</a></li><br>
-      <li><a href="#">YT Playlist</a></li><br>
-      <li><a href="http://youtube.com/post/Ugkx6loQWkwAWe-LqLYxP7usmSgmT6Fe9WGf?si=8DK2cUFxlYzsrBm3">Help</a></li>
-    </ul><br>
-  </nav>
+<header>Toodiy</header>
 
-  <main>
-    <p>Welcome to Toodiy!  This is a dynamic and monospaced layout.  More content will be added here later.</p>
-  </main>
+<div class="links">
+    <a href="https://www.youtube.com/@ivaansri1359" target="_blank">YouTube</a>
+    <a href="http://youtube.com/post/Ugkx6loQWkwAWe-LqLYxP7usmSgmT6Fe9WGf?si=8DK2cUFxlYzsrBm3" target="_blank">Help</a>
+</div>
 
-  <footer>
-    <p>&copy; 2024 Toodiy</p>
-  </footer>
+<h2>Gallery</h2>
+<div class="gallery" id="gallery"></div>
+
+<script>
+    const galleryItems = [
+        { name: "Hello", description: "hello", link: "https://www.example.com" }
+    ];
+
+    function renderGallery() {
+        const gallery = document.getElementById("gallery");
+        gallery.innerHTML = "";
+
+        galleryItems.forEach(item => {
+            const div = document.createElement("div");
+            div.classList.add("item");
+            div.innerHTML = `<h3>${item.name}</h3><p>${item.description}</p><a href="${item.link}" target="_blank">Visit</a>`;
+            gallery.appendChild(div);
+        });
+    }
+
+    renderGallery();
+</script>
+
 </body>
 </html>
