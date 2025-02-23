@@ -31,8 +31,9 @@
             display: block;
         }
         .popup img {
-            width: 50px;
-            height: 50px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
         }
         .popup h2 {
             margin: 10px 0;
@@ -55,39 +56,17 @@
 <body>
 
     <div id="popup" class="popup">
-        <img src="https://www.svgrepo.com/show/303198/youtube-icon-logo.svg" alt="YouTube Logo">
+        <img src="profile.jpg" alt="Profile Picture">
         <h2>@ivaansri1359</h2>
-        <p>Subscribers: <span id="subs">Loading...</span></p>
-        <p>Views: <span id="views">Loading...</span></p>
-        <button onclick="closePopup()">Continue Service</button>
+        <p>Subscribers: <strong>16K</strong></p>
+        <p>Views: <strong>3M</strong></p>
+        <button onclick="viewChannel()">View Channel</button>
     </div>
 
     <script>
-        function closePopup() {
-            document.getElementById("popup").style.display = "none";
+        function viewChannel() {
+            window.open("https://www.youtube.com/@ivaansri1359", "_blank");
         }
-
-        async function fetchYTStats() {
-            try {
-                let response = await fetch("https://scraperapi.com?api_key=YOUR_SCRAPER_API_KEY&url=https://www.youtube.com/@ivaansri1359/about");
-                let text = await response.text();
-
-                let subsMatch = text.match(/"subscriberCountText":\{"simpleText":"(.*?) subscribers"/);
-                let viewsMatch = text.match(/"viewCountText":\{"simpleText":"(.*?) views"/);
-
-                if (subsMatch && viewsMatch) {
-                    document.getElementById("subs").textContent = subsMatch[1];
-                    document.getElementById("views").textContent = viewsMatch[1];
-                } else {
-                    document.getElementById("subs").textContent = "Error";
-                    document.getElementById("views").textContent = "Error";
-                }
-            } catch (error) {
-                console.error("Error fetching YouTube stats:", error);
-            }
-        }
-
-        fetchYTStats();
     </script>
 
 </body>
