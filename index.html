@@ -3,85 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tooldiy</title>
+    <title>ToolDIY</title>
     <style>
-        body {
+        * {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            text-align: center;
-            background-color: #f4f4f4;
+            box-sizing: border-box;
         }
-        header {
-            background: #333;
-            color: white;
-            padding: 15px;
-            font-size: 24px;
-        }
-        .links {
-            margin: 20px;
-        }
-        .links a {
-            text-decoration: none;
-            color: #007bff;
-            margin: 0 15px;
-            font-size: 18px;
-        }
-        .gallery {
+        body {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 20px;
+            align-items: center;
+            height: 100vh;
+            background: #f4f4f4;
         }
-        .item {
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             background: white;
-            padding: 15px;
-            margin: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 200px;
-        }
-        .item a {
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: center;
             display: block;
-            text-decoration: none;
-            color: #007bff;
-            font-weight: bold;
+        }
+        .popup img {
+            width: 50px;
+            height: 50px;
+        }
+        .popup h2 {
+            margin: 10px 0;
+        }
+        .popup button {
+            background: #ff0000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
             margin-top: 10px;
+        }
+        .popup button:hover {
+            background: #cc0000;
         }
     </style>
 </head>
 <body>
 
-<header>Tooldiy</header>
+    <div id="popup" class="popup">
+        <img src="https://www.svgrepo.com/show/303198/youtube-icon-logo.svg" alt="YouTube Logo">
+        <h2>@ivaansri1359</h2>
+        <p>Subscribers: <span id="subs">Loading...</span></p>
+        <p>Views: <span id="views">Loading...</span></p>
+        <button onclick="closePopup()">Continue Service</button>
+    </div>
 
-<div class="links">
-    <a href="https://www.youtube.com/@ivaansri1359" target="_blank">YouTube</a>
-<a href="https://youtube.com/playlist?list=PLYGMqlw1Q-NwOrA5BKXHeSYCzE5BJ-KmS&si=ol0kUOpHdLKYrIGQ">Playlist</a>
-    <a href="http://youtube.com/post/Ugkx6loQWkwAWe-LqLYxP7usmSgmT6Fe9WGf?si=8DK2cUFxlYzsrBm3" target="_blank">Help</a>
-</div>
+    <script>
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
 
-<h2>Gallery</h2>
-<div class="gallery" id="gallery"></div>
+        async function fetchYTStats() {
+            try {
+                let response = await fetch("https://scraperapi.com?api_key=YOUR_SCRAPER_API_KEY&url=https://www.youtube.com/@ivaansri1359/about");
+                let text = await response.text();
 
-<script>
-    const galleryItems = [
-        { name: "Textedit", description: "A simple text editor", link: "https://www.abceveryone.github.io/textedit.html" }
-    ];
+                let subsMatch = text.match(/"subscriberCountText":\{"simpleText":"(.*?) subscribers"/);
+                let viewsMatch = text.match(/"viewCountText":\{"simpleText":"(.*?) views"/);
 
-    function renderGallery() {
-        const gallery = document.getElementById("gallery");
-        gallery.innerHTML = "";
+                if (subsMatch && viewsMatch) {
+                    document.getElementById("subs").textContent = subsMatch[1];
+                    document.getElementById("views").textContent = viewsMatch[1];
+                } else {
+                    document.getElementById("subs").textContent = "Error";
+                    document.getElementById("views").textContent = "Error";
+                }
+            } catch (error) {
+                console.error("Error fetching YouTube stats:", error);
+            }
+        }
 
-        galleryItems.forEach(item => {
-            const div = document.createElement("div");
-            div.classList.add("item");
-            div.innerHTML = `<h3>${item.name}</h3><p>${item.description}</p><a href="${item.link}" target="_blank">Visit</a>`;
-            gallery.appendChild(div);
-        });
-    }
-
-    renderGallery();
-</script>
+        fetchYTStats();
+    </script>
 
 </body>
 </html>
