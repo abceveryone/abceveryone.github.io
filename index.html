@@ -3,104 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ivaan's Search</title>
+    <title>Ivaansri1359</title>
     <style>
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+            font-family: sans-serif;
         }
         body {
-            padding: 10px;
+            background: #f8f8f8;
+            padding: 20px;
         }
-        header {
+        /* Sticky Header with Search Bar */
+        .header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #333;
-            color: white;
-            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            z-index: 101;
+        }
+        .title {
             font-size: 18px;
+            font-weight: bold;
         }
-        .settings-icon {
-            cursor: pointer;
-            font-size: 20px;
-        }
-        #search-container {
-            display: flex;
-            gap: 10px;
-            padding: 10px;
-            background: #f1f1f1;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        #search-container input, #search-container select, #search-container button {
+        .search-bar {
+            flex: 1;
+            margin-left: 10px;
             padding: 8px;
             font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
         }
-        #items-list {
-            list-style: none;
-            margin-top: 10px;
+        /* Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
         }
-        .item {
-            padding: 10px;
-            border: 1px solid #ddd;
-            margin: 5px 0;
+        .card {
             background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        .item a {
-            color: blue;
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .desc {
+            color: #666;
+            margin: 5px 0;
+        }
+        .link {
+            display: inline-block;
+            margin-top: 10px;
             text-decoration: none;
+            color: white;
+            background: #007bff;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .link:hover {
+            background: #0056b3;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>ivaansri1359</h1>
-        <span class="settings-icon">⚙️</span>
-    </header>
-
-    <div id="search-container">
-        <input type="text" id="search" placeholder="Search..." onkeyup="liveSearch()">
-        <select id="filter">
-            <option value="name">Name</option>
-            <option value="description">Description</option>
-            <option value="type">Type</option>
-        </select>
-        <button onclick="liveSearch()">Go</button>
+    <div class="header">
+        <div class="title">Ivaansri1359</div>
+        <input type="text" class="search-bar" id="search" placeholder="Search..." oninput="filterItems()">
     </div>
 
-    <ul id="items-list">
-        <li class="item" data-name="python" data-description="learn python" data-type="course">
-            <strong>Python</strong> - Learn Python (Course) - 
-            <a href="https://example.com" target="_blank">Go</a>
-        </li>
-        <li class="item" data-name="javascript" data-description="learn javascript" data-type="course">
-            <strong>JavaScript</strong> - Learn JavaScript (Course) - 
-            <a href="https://example.com" target="_blank">Go</a>
-        </li>
-        <li class="item" data-name="html" data-description="learn html" data-type="tutorial">
-            <strong>HTML</strong> - Learn HTML (Tutorial) - 
-            <a href="https://example.com" target="_blank">Go</a>
-        </li>
-    </ul>
+    <div class="gallery" id="gallery">
+        <div class="card" data-title="Youtube">
+            <div class="title">Youtube</div>
+            <div class="desc">@ivaansri1359</div>
+            <a href="https://www.youtube.com/@ivaansri1359?sub_confirmation=1" class="link">Subscribe</a> <span> Page </span>
+        </div>
+    </div>
 
     <script>
-        function liveSearch() {
+        function filterItems() {
             let input = document.getElementById("search").value.toLowerCase();
-            let filter = document.getElementById("filter").value;
-            let items = document.querySelectorAll(".item");
-
-            items.forEach(item => {
-                let value = item.dataset[filter].toLowerCase();
-                if (value.includes(input)) {
-                    item.style.display = "block";
-                } else {
-                    item.style.display = "none";
-                }
+            let cards = document.querySelectorAll(".card");
+            cards.forEach(card => {
+                let title = card.getAttribute("data-title").toLowerCase();
+                card.style.display = title.includes(input) ? "block" : "none";
             });
         }
     </script>
