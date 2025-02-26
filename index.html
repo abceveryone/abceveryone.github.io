@@ -3,175 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tooldiy</title>
-    <style>
-        /* General Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f8f8;
-            color: #333;
-            overflow-x: hidden;
-        }
-
-        /* Smooth scrolling effect */
-        html {
-            scroll-snap-type: y mandatory;
-        }
-        section {
-            scroll-snap-align: start;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            transition: transform 0.8s ease-in-out;
-        }
-
-        /* Sections */
-        .hero { background: #fff; }
-        .search { background: #f2f2f2; }
-        .ai { background: #e6e6e6; }
-        .projects { background: #d9d9d9; }
-        .test-project { background: #c2c2c2; }
-        .test-course { background: #b2b2b2; }
-        .footer { background: #ccc; padding: 40px 20px; }
-
-        /* Content */
-        h1, h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        .subtext {
-            font-size: 1.2rem;
-            color: #555;
-            margin-bottom: 20px;
-        }
-        .stars {
-            font-size: 1.5rem;
-            color: #FFD700;
-            margin-bottom: 20px;
-        }
-
-        /* Search Bars */
-        .search-box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-        input {
-            padding: 12px;
-            font-size: 1rem;
-            width: 70%;
-            max-width: 400px;
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            outline: none;
-        }
-        button {
-            padding: 12px 20px;
-            font-size: 1rem;
-            background: #007BFF;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-
-        /* Footer */
-        .footer a {
-            color: #007BFF;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        /* Support Button */
-        .support-btn {
-            margin-top: 20px;
-            display: inline-block;
-            padding: 12px 20px;
-            background: #28a745;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: background 0.3s;
-        }
-        .support-btn:hover {
-            background: #218838;
-        }
-
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Mobile-Friendly */
-        @media (max-width: 600px) {
-            h1, h2 {
-                font-size: 2rem;
-            }
-            input {
-                width: 80%;
-            }
-            button {
-                padding: 10px 15px;
-            }
-        }
-    </style>
+    <title>Tooldiy Login</title>
 </head>
 <body>
 
-    <!-- Section 1: Hero -->
-    <section class="hero fade-in">
-        <div>
-            <h1>Tooldiy</h1>
-            <div class="stars">⭐ 4.6 Stars</div>
-            <p class="subtext">Trusted for over 3 years</p>
-            <a href="https://example.com" class="support-btn">Support</a>
-        </div>
-    </section>
+    <h1>Login to Tooldiy</h1>
+    <button id="login">Login with Google</button>
+    <button id="logout" style="display: none;">Logout</button>
+    <p id="user-info"></p>
 
-    <!-- Footer -->
-    <section class="footer fade-in">
-        <div>
-            <p>Tooldiy YouTube: <a href="https://www.youtube.com/@ivaansri1359" target="_blank">ivaansri1359</a></p>
-            <p>Copyright &copy; 2023 Tooldiy</p>
-        </div>
-    </section>
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 
-    <!-- JavaScript for animations -->
-    <script>
-        const sections = document.querySelectorAll(".fade-in");
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCbwlEKSpafGS7wpiNhyA-iFsRoutQ66ag",
+            authDomain: "tooldiy-7f7ca.firebaseapp.com",
+            projectId: "tooldiy-7f7ca",
+            storageBucket: "tooldiy-7f7ca.firebasestorage.app",
+            messagingSenderId: "631428738593",
+            appId: "1:631428738593:web:b38a813d10cbfcd626fd60"
+        };
 
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("visible");
-                }
-            });
-        }, { threshold: 0.3 });
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        const provider = new GoogleAuthProvider();
 
-        sections.forEach(section => {
-            observer.observe(section);
+        // Login with Google
+        document.getElementById("login").addEventListener("click", () => {
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    document.getElementById("user-info").innerText = `Hello, ${user.displayName}`;
+                    document.getElementById("login").style.display = "none";
+                    document.getElementById("logout").style.display = "block";
+                })
+                .catch((error) => {
+                    console.error("Login Error:", error);
+                });
+        });
+
+        // Logout
+        document.getElementById("logout").addEventListener("click", () => {
+            signOut(auth)
+                .then(() => {
+                    document.getElementById("user-info").innerText = "";
+                    document.getElementById("login").style.display = "block";
+                    document.getElementById("logout").style.display = "none";
+                })
+                .catch((error) => {
+                    console.error("Logout Error:", error);
+                });
         });
     </script>
 
