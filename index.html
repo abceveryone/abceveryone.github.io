@@ -3,70 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToolDIY</title>
+    <title>Tooldiy</title>
     <style>
+        /* General Styles */
         * {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
         body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Smooth scrolling effect */
+        html {
+            scroll-snap-type: y mandatory;
+        }
+        section {
+            scroll-snap-align: start;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background: #f4f4f4;
-        }
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
             text-align: center;
-            display: block;
+            padding: 20px;
+            transition: transform 0.8s ease-in-out;
         }
-        .popup img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
+
+        /* Sections */
+        .hero { background: #fff; }
+        .search { background: #f2f2f2; }
+        .ai { background: #e6e6e6; }
+        .projects { background: #d9d9d9; }
+        .test-project { background: #c2c2c2; }
+        .test-course { background: #b2b2b2; }
+        .footer { background: #ccc; padding: 40px 20px; }
+
+        /* Content */
+        h1, h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
-        .popup h2 {
-            margin: 10px 0;
+        .subtext {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 20px;
         }
-        .popup button {
-            background: #ff0000;
-            color: white;
+        .stars {
+            font-size: 1.5rem;
+            color: #FFD700;
+            margin-bottom: 20px;
+        }
+
+        /* Search Bars */
+        .search-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        input {
+            padding: 12px;
+            font-size: 1rem;
+            width: 70%;
+            max-width: 400px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+        }
+        button {
+            padding: 12px 20px;
+            font-size: 1rem;
+            background: #007BFF;
+            color: #fff;
             border: none;
-            padding: 10px 20px;
-            font-size: 16px;
+            border-radius: 8px;
             cursor: pointer;
-            border-radius: 5px;
-            margin-top: 10px;
+            transition: background 0.3s;
         }
-        .popup button:hover {
-            background: #cc0000;
+        button:hover {
+            background: #0056b3;
+        }
+
+        /* Footer */
+        .footer a {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Support Button */
+        .support-btn {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 12px 20px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        .support-btn:hover {
+            background: #218838;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile-Friendly */
+        @media (max-width: 600px) {
+            h1, h2 {
+                font-size: 2rem;
+            }
+            input {
+                width: 80%;
+            }
+            button {
+                padding: 10px 15px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div id="popup" class="popup">
-        <img src="profile.jpg" alt="Profile Picture">
-        <h2>@ivaansri1359</h2>
-        <p>Subscribers: <strong>16K</strong></p>
-        <p>Views: <strong>3M</strong></p>
-        <button onclick="viewChannel()">View Channel</button>
-    </div>
+    <!-- Section 1: Hero -->
+    <section class="hero fade-in">
+        <div>
+            <h1>Tooldiy</h1>
+            <div class="stars">⭐ 4.6 Stars</div>
+            <p class="subtext">Trusted for over 3 years</p>
+            <a href="https://example.com" class="support-btn">Support</a>
+        </div>
+    </section>
 
+    <!-- Footer -->
+    <section class="footer fade-in">
+        <div>
+            <p>Tooldiy YouTube: <a href="https://www.youtube.com/@ivaansri1359" target="_blank">ivaansri1359</a></p>
+            <p>Copyright &copy; 2023 Tooldiy</p>
+        </div>
+    </section>
+
+    <!-- JavaScript for animations -->
     <script>
-        function viewChannel() {
-            window.open("https://www.youtube.com/@ivaansri1359", "_blank");
-        }
+        const sections = document.querySelectorAll(".fade-in");
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                }
+            });
+        }, { threshold: 0.3 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
     </script>
 
 </body>
